@@ -1,0 +1,1 @@
+{"version":3,"file":"connection.d.ts","sourceRoot":"","sources":["../../src/commands/connection.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,MAAM,QAAQ,CAAC;AACjC,OAAO,EAAE,iBAAiB,EAAE,MAAM,2BAA2B,CAAC;AAC9D,OAAO,EAAE,oBAAoB,EAAE,MAAM,uBAAuB,CAAC;AAI7D,wBAAgB,0BAA0B,CACxC,OAAO,EAAE,MAAM,CAAC,gBAAgB,EAChC,iBAAiB,EAAE,iBAAiB,EACpC,YAAY,EAAE,oBAAoB,GACjC,IAAI,CAsDN"}
