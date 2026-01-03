@@ -40,8 +40,8 @@
       "activitybar": [
         {
           "id": "langfuseContainer",
-          "title": "Langfuse",
-          "icon": "media/icon.svg"
+          "title": "LLM Trace Viewer",
+          "icon": "media/icon.png"
         }
       ]
     },
@@ -54,17 +54,17 @@
       ]
     },
     "commands": [
-      {"command": "langfusecode.addConnection", "title": "Langfuse: Add Connection", "icon": "$(add)"},
-      {"command": "langfusecode.editConnection", "title": "Langfuse: Edit Connection", "icon": "$(edit)"},
-      {"command": "langfusecode.deleteConnection", "title": "Langfuse: Delete Connection", "icon": "$(trash)"},
-      {"command": "langfusecode.connect", "title": "Langfuse: Connect", "icon": "$(plug)"},
-      {"command": "langfusecode.disconnect", "title": "Langfuse: Disconnect", "icon": "$(debug-disconnect)"},
-      {"command": "langfusecode.refresh", "title": "Langfuse: Refresh", "icon": "$(refresh)"},
-      {"command": "langfusecode.setDateRange", "title": "Langfuse: Set Date Range", "icon": "$(calendar)"},
-      {"command": "langfusecode.searchTraces", "title": "Langfuse: Search Traces", "icon": "$(search)"},
-      {"command": "langfusecode.clearFilters", "title": "Langfuse: Clear Filters", "icon": "$(clear-all)"},
-      {"command": "langfusecode.viewTrace", "title": "Langfuse: View Trace Details", "icon": "$(eye)"},
-      {"command": "langfusecode.openInBrowser", "title": "Langfuse: Open in Browser", "icon": "$(link-external)"},
+      {"command": "langfusecode.addConnection", "title": "LLM Trace: Add Connection", "icon": "$(add)"},
+      {"command": "langfusecode.editConnection", "title": "LLM Trace: Edit Connection", "icon": "$(edit)"},
+      {"command": "langfusecode.deleteConnection", "title": "LLM Trace: Delete Connection", "icon": "$(trash)"},
+      {"command": "langfusecode.connect", "title": "LLM Trace: Connect", "icon": "$(plug)"},
+      {"command": "langfusecode.disconnect", "title": "LLM Trace: Disconnect", "icon": "$(debug-disconnect)"},
+      {"command": "langfusecode.refresh", "title": "LLM Trace: Refresh", "icon": "$(refresh)"},
+      {"command": "langfusecode.setDateRange", "title": "LLM Trace: Set Date Range", "icon": "$(calendar)"},
+      {"command": "langfusecode.searchTraces", "title": "LLM Trace: Search Traces", "icon": "$(search)"},
+      {"command": "langfusecode.clearFilters", "title": "LLM Trace: Clear Filters", "icon": "$(clear-all)"},
+      {"command": "langfusecode.viewTrace", "title": "LLM Trace: View Trace Details", "icon": "$(eye)"},
+      {"command": "langfusecode.openInBrowser", "title": "LLM Trace: Open in Browser", "icon": "$(link-external)"},
       {"command": "langfusecode.loadMoreTraces", "title": "Load More Traces", "icon": "$(ellipsis)"},
       {"command": "langfusecode.loadOlderTraces", "title": "Load Older Traces (Previous 30min)", "icon": "$(history)"}
     ],
@@ -84,7 +84,7 @@
       ]
     },
     "configuration": {
-      "title": "Langfuse",
+      "title": "LLM Trace Viewer",
       "properties": {
         "langfusecode.defaultPageSize": {
           "type": "number",
