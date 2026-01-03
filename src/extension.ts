@@ -26,11 +26,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   registerFilterCommands(context, treeProvider);
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('langfusecode.refresh', () => {
-      treeProvider.refresh();
-    }),
-    vscode.commands.registerCommand('langfusecode.loadOlderTraces', 
-      (connectionId: string, fromTime: Date, toTime: Date) => {
+    vscode.commands.registerCommand('langfusecode.loadOlderTraces',
+      (connectionId: string, fromTimeISO: string, toTimeISO: string) => {
+        const fromTime = new Date(fromTimeISO);
+        const toTime = new Date(toTimeISO);
         treeProvider.loadOlderTraces(connectionId, fromTime, toTime);
       }
     )

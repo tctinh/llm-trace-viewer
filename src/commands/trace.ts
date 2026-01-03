@@ -9,7 +9,7 @@ export function registerTraceCommands(
 ): void {
   context.subscriptions.push(
     vscode.commands.registerCommand('langfusecode.viewTrace', (item: TraceItem) => {
-      TraceDetailPanel.show(item.connectionId, item.trace, connectionManager);
+      TraceDetailPanel.show(item.connectionId, item.trace, connectionManager, context.extensionUri);
     }),
 
     vscode.commands.registerCommand('langfusecode.openInBrowser', (item: TraceItem | ObservationItem) => {

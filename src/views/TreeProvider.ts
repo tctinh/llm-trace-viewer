@@ -212,7 +212,17 @@ export class LangfuseTreeProvider implements vscode.TreeDataProvider<vscode.Tree
       }
     }
 
-    const children = observations.filter(obs => obs.parentObservationId === parentId);
+    // Build set of all observation IDs for quick lookup
+    const observationIds = new Set(observations.map(o => o.id));
+
+    const children = observations.filter(obs => {
+      const obsParentId = obs.parentObservationId;
+      if (parentId === null) {
+        // Root level: parent is null, empty, doesn't exist in observations, or equals traceId
+        return !obsParentId || obsParentId === traceId || !observationIds.has(obsParentId);
+      }
+      return obsParentId === parentId;
+    });
     
     if (children.length === 0) {
       if (parentId === null) {

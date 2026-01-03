@@ -65,10 +65,11 @@ export class LoadOlderItem extends vscode.TreeItem {
     super(`Load older traces (${timeStr})`, vscode.TreeItemCollapsibleState.None);
     this.contextValue = 'loadOlder';
     this.iconPath = new vscode.ThemeIcon('history');
+    // Pass dates as ISO strings to avoid serialization issues
     this.command = {
       command: 'langfusecode.loadOlderTraces',
       title: 'Load Older',
-      arguments: [connectionId, fromTime, toTime]
+      arguments: [connectionId, fromTime.toISOString(), toTime.toISOString()]
     };
   }
 }

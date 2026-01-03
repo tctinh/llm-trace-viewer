@@ -2,6 +2,17 @@
 
 All notable changes to the LLM Trace Viewer extension will be documented in this file.
 
+## [0.1.3] - 2025-01-03
+
+### Fixed
+- Fixed observation tree not showing nested children
+- Fixed "Load older traces" command not working
+- Fixed duplicate command registration error
+- Fixed activity bar icon using codicon
+
+### Changed
+- Use codicon $(telescope) for activity bar icon
+
 ## [0.1.2] - 2025-01-03
 
 ### Changed

@@ -28,7 +28,8 @@ export class TraceDetailPanel {
   static show(
     connectionId: string,
     trace: Trace,
-    connectionManager: ConnectionManager
+    connectionManager: ConnectionManager,
+    _extensionUri: vscode.Uri
   ): void {
     const key = `${connectionId}:${trace.id}`;
     const existing = this.panels.get(key);
@@ -304,7 +305,7 @@ body { display: flex; justify-content: center; align-items: center; height: 100v
         <div class="sidebar-meta">${observations.length} observations · ${traceDuration}s</div>
       </div>
       <div class="tree">
-        ${this.renderTreeItem('trace', trace.id, trace.name || 'Trace', traceDuration + 's', null, 0, true, this.buildObservationTree(observations))}
+        ${this.renderTreeItem('trace', trace.id, trace.name || 'Trace', traceDuration + 's', null, 0, true, this.buildObservationTree(observations, trace.id))}
       </div>
     </div>
     <div class="main">
@@ -509,12 +510,18 @@ body { display: flex; justify-content: center; align-items: center; height: 100v
 </html>`;
   }
 
-  private buildObservationTree(observations: Observation[]): Map<string | null, Observation[]> {
+  private buildObservationTree(observations: Observation[], traceId: string): Map<string | null, Observation[]> {
     const tree = new Map<string | null, Observation[]>();
     tree.set(null, []);
-    
+
+    // Build set of all observation IDs for quick lookup
+    const observationIds = new Set(observations.map(o => o.id));
+
     observations.forEach(obs => {
-      const parentId = obs.parentObservationId || null;
+      // Root if parentObservationId is null, empty, equals traceId, or doesn't exist in observations
+      const parentId = (!obs.parentObservationId || obs.parentObservationId === traceId || !observationIds.has(obs.parentObservationId))
+        ? null
+        : obs.parentObservationId;
       if (!tree.has(parentId)) {
         tree.set(parentId, []);
       }
@@ -590,7 +597,7 @@ body { display: flex; justify-content: center; align-items: center; height: 100v
     }
   }
 
-  private renderDetailContent(type: string, data: Trace | Observation): string {
+  private renderDetailContent(_type: string, data: Trace | Observation): string {
     return `
       ${this.renderSection('Input', data.input)}
       ${this.renderSection('Output', data.output)}
