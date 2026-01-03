@@ -2,15 +2,29 @@
   "name": "llm-trace-viewer",
   "displayName": "LLM Trace Viewer",
   "description": "Browse and debug LLM traces from Langfuse directly in VS Code. Support for LangSmith and Pydantic Logfire coming soon.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "publisher": "tctinh",
   "license": "SEE LICENSE IN LICENSE",
   "icon": "media/icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
-  "categories": ["Other", "Debuggers", "Machine Learning"],
-  "keywords": ["langfuse", "langsmith", "llm", "observability", "tracing", "debugging", "ai", "openai", "anthropic"],
+  "categories": [
+    "Other",
+    "Debuggers",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "langfuse",
+    "langsmith",
+    "llm",
+    "observability",
+    "tracing",
+    "debugging",
+    "ai",
+    "openai",
+    "anthropic"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/tctinh/llm-trace-viewer"
@@ -57,33 +71,121 @@
       ]
     },
     "commands": [
-      {"command": "langfusecode.addConnection", "title": "LLM Trace: Add Connection", "icon": "$(add)"},
-      {"command": "langfusecode.editConnection", "title": "LLM Trace: Edit Connection", "icon": "$(edit)"},
-      {"command": "langfusecode.deleteConnection", "title": "LLM Trace: Delete Connection", "icon": "$(trash)"},
-      {"command": "langfusecode.connect", "title": "LLM Trace: Connect", "icon": "$(plug)"},
-      {"command": "langfusecode.disconnect", "title": "LLM Trace: Disconnect", "icon": "$(debug-disconnect)"},
-      {"command": "langfusecode.refresh", "title": "LLM Trace: Refresh", "icon": "$(refresh)"},
-      {"command": "langfusecode.setDateRange", "title": "LLM Trace: Set Date Range", "icon": "$(calendar)"},
-      {"command": "langfusecode.searchTraces", "title": "LLM Trace: Search Traces", "icon": "$(search)"},
-      {"command": "langfusecode.clearFilters", "title": "LLM Trace: Clear Filters", "icon": "$(clear-all)"},
-      {"command": "langfusecode.viewTrace", "title": "LLM Trace: View Trace Details", "icon": "$(eye)"},
-      {"command": "langfusecode.openInBrowser", "title": "LLM Trace: Open in Browser", "icon": "$(link-external)"},
-      {"command": "langfusecode.loadMoreTraces", "title": "Load More Traces", "icon": "$(ellipsis)"},
-      {"command": "langfusecode.loadOlderTraces", "title": "Load Older Traces (Previous 30min)", "icon": "$(history)"}
+      {
+        "command": "langfusecode.addConnection",
+        "title": "LLM Trace: Add Connection",
+        "icon": "$(add)"
+      },
+      {
+        "command": "langfusecode.editConnection",
+        "title": "LLM Trace: Edit Connection",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "langfusecode.deleteConnection",
+        "title": "LLM Trace: Delete Connection",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "langfusecode.connect",
+        "title": "LLM Trace: Connect",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "langfusecode.disconnect",
+        "title": "LLM Trace: Disconnect",
+        "icon": "$(debug-disconnect)"
+      },
+      {
+        "command": "langfusecode.refresh",
+        "title": "LLM Trace: Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "langfusecode.setDateRange",
+        "title": "LLM Trace: Set Date Range",
+        "icon": "$(calendar)"
+      },
+      {
+        "command": "langfusecode.searchTraces",
+        "title": "LLM Trace: Search Traces",
+        "icon": "$(search)"
+      },
+      {
+        "command": "langfusecode.clearFilters",
+        "title": "LLM Trace: Clear Filters",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "langfusecode.viewTrace",
+        "title": "LLM Trace: View Trace Details",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "langfusecode.openInBrowser",
+        "title": "LLM Trace: Open in Browser",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "langfusecode.loadMoreTraces",
+        "title": "Load More Traces",
+        "icon": "$(ellipsis)"
+      },
+      {
+        "command": "langfusecode.loadOlderTraces",
+        "title": "Load Older Traces (Previous 30min)",
+        "icon": "$(history)"
+      }
     ],
     "menus": {
       "view/title": [
-        {"command": "langfusecode.addConnection", "when": "view == langfuseExplorer", "group": "navigation@1"},
-        {"command": "langfusecode.refresh", "when": "view == langfuseExplorer", "group": "navigation@2"},
-        {"command": "langfusecode.searchTraces", "when": "view == langfuseExplorer", "group": "navigation@3"}
+        {
+          "command": "langfusecode.addConnection",
+          "when": "view == langfuseExplorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "langfusecode.refresh",
+          "when": "view == langfuseExplorer",
+          "group": "navigation@2"
+        },
+        {
+          "command": "langfusecode.searchTraces",
+          "when": "view == langfuseExplorer",
+          "group": "navigation@3"
+        }
       ],
       "view/item/context": [
-        {"command": "langfusecode.connect", "when": "view == langfuseExplorer && viewItem == connection-disconnected", "group": "inline@1"},
-        {"command": "langfusecode.disconnect", "when": "view == langfuseExplorer && viewItem == connection-connected", "group": "inline@1"},
-        {"command": "langfusecode.editConnection", "when": "view == langfuseExplorer && viewItem =~ /^connection/", "group": "context@1"},
-        {"command": "langfusecode.deleteConnection", "when": "view == langfuseExplorer && viewItem =~ /^connection/", "group": "context@2"},
-        {"command": "langfusecode.viewTrace", "when": "view == langfuseExplorer && viewItem == trace", "group": "inline@1"},
-        {"command": "langfusecode.openInBrowser", "when": "view == langfuseExplorer && viewItem == trace", "group": "inline@2"}
+        {
+          "command": "langfusecode.connect",
+          "when": "view == langfuseExplorer && viewItem == connection-disconnected",
+          "group": "inline@1"
+        },
+        {
+          "command": "langfusecode.disconnect",
+          "when": "view == langfuseExplorer && viewItem == connection-connected",
+          "group": "inline@1"
+        },
+        {
+          "command": "langfusecode.editConnection",
+          "when": "view == langfuseExplorer && viewItem =~ /^connection/",
+          "group": "context@1"
+        },
+        {
+          "command": "langfusecode.deleteConnection",
+          "when": "view == langfuseExplorer && viewItem =~ /^connection/",
+          "group": "context@2"
+        },
+        {
+          "command": "langfusecode.viewTrace",
+          "when": "view == langfuseExplorer && viewItem == trace",
+          "group": "inline@1"
+        },
+        {
+          "command": "langfusecode.openInBrowser",
+          "when": "view == langfuseExplorer && viewItem == trace",
+          "group": "inline@2"
+        }
       ]
     },
     "configuration": {
@@ -97,7 +199,14 @@
         "langfusecode.defaultDateRange": {
           "type": "string",
           "default": "30m",
-          "enum": ["30m", "1h", "6h", "24h", "7d", "30d"],
+          "enum": [
+            "30m",
+            "1h",
+            "6h",
+            "24h",
+            "7d",
+            "30d"
+          ],
           "description": "Default date range filter for traces"
         },
         "langfusecode.autoRefreshInterval": {
