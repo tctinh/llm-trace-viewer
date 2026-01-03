@@ -2,6 +2,13 @@
 
 All notable changes to the LLM Trace Viewer extension will be documented in this file.
 
+## [0.1.1] - 2025-01-03
+
+### Changed
+- Rebranded to "LLM Trace Viewer"
+- Updated command titles to use "LLM Trace:" prefix
+- New extension icon
+
 ## [0.1.0] - 2024
 
 ### Added

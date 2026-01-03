@@ -2,7 +2,7 @@
   "name": "llm-trace-viewer",
   "displayName": "LLM Trace Viewer",
   "description": "Browse and debug LLM traces from Langfuse directly in VS Code. Support for LangSmith and Pydantic Logfire coming soon.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "tctinh",
   "license": "SEE LICENSE IN LICENSE",
   "icon": "media/icon.png",
