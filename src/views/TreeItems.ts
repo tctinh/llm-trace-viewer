@@ -14,6 +14,20 @@ export class ConnectionItem extends vscode.TreeItem {
   }
 }
 
+export class EnvironmentGroupItem extends vscode.TreeItem {
+  constructor(
+    public readonly environment: string,
+    public readonly connectionId: string,
+    public readonly traceCount: number,
+  ) {
+    super(environment, vscode.TreeItemCollapsibleState.Collapsed);
+    this.contextValue = 'environmentGroup';
+    this.iconPath = new vscode.ThemeIcon('server-environment');
+    this.description = `(${traceCount})`;
+    this.tooltip = `Environment: ${environment}\nTraces: ${traceCount}`;
+  }
+}
+
 export class TraceItem extends vscode.TreeItem {
   constructor(
     public readonly trace: Trace,

@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { ConnectionManager } from '../core/ConnectionManager';
 import { Trace, Observation } from '../types';
-import { ConnectionItem, TraceItem, ObservationItem, LoadOlderItem, MessageItem } from './TreeItems';
+import { ConnectionItem, TraceItem, ObservationItem, LoadOlderItem, MessageItem, EnvironmentGroupItem } from './TreeItems';
 
 const WINDOW_MS = 30 * 60 * 1000;
 
@@ -54,7 +54,11 @@ export class LangfuseTreeProvider implements vscode.TreeDataProvider<vscode.Tree
     }
 
     if (element instanceof ConnectionItem) {
-      return this.getTraceItems(element.config.id);
+      return this.getEnvironmentGroups(element.config.id);
+    }
+
+    if (element instanceof EnvironmentGroupItem) {
+      return this.getTraceItemsForEnvironment(element.connectionId, element.environment);
     }
 
     if (element instanceof TraceItem) {
@@ -125,6 +129,71 @@ export class LangfuseTreeProvider implements vscode.TreeDataProvider<vscode.Tree
       const message = error instanceof Error ? error.message : 'Unknown error';
       return [new MessageItem(`Error: ${message}`, 'error')];
     }
+  }
+
+  private async getEnvironmentGroups(connectionId: string): Promise<vscode.TreeItem[]> {
+    const traceItems = await this.getTraceItems(connectionId);
+    
+    if (traceItems.length === 1 && traceItems[0] instanceof MessageItem) {
+      return traceItems;
+    }
+
+    const window = this.tracesCache.get(connectionId);
+    if (!window || window.traces.length === 0) {
+      return [new MessageItem('No traces in this time window', 'info')];
+    }
+
+    const envGroups = new Map<string, Trace[]>();
+    for (const trace of window.traces) {
+      const env = trace.environment || '(no environment)';
+      if (!envGroups.has(env)) {
+        envGroups.set(env, []);
+      }
+      envGroups.get(env)!.push(trace);
+    }
+
+    const items: vscode.TreeItem[] = [];
+    const sortedEnvs = [...envGroups.keys()].sort((a, b) => {
+      if (a === '(no environment)') return 1;
+      if (b === '(no environment)') return -1;
+      return a.localeCompare(b);
+    });
+
+    for (const env of sortedEnvs) {
+      const traces = envGroups.get(env)!;
+      items.push(new EnvironmentGroupItem(env, connectionId, traces.length));
+    }
+
+    if (window.hasMore) {
+      const olderEnd = window.oldestTimestamp;
+      const olderStart = new Date(olderEnd.getTime() - WINDOW_MS);
+      items.push(new LoadOlderItem(connectionId, olderStart, olderEnd));
+    }
+
+    return items;
+  }
+
+  private async getTraceItemsForEnvironment(connectionId: string, environment: string): Promise<vscode.TreeItem[]> {
+    const window = this.tracesCache.get(connectionId);
+    if (!window) {
+      return [new MessageItem('No traces loaded', 'info')];
+    }
+
+    const client = this.connectionManager.getClient(connectionId);
+    const baseUrl = client?.baseUrl || '';
+
+    const envKey = environment === '(no environment)' ? null : environment;
+    const traces = window.traces.filter(t => (t.environment || null) === envKey);
+
+    if (traces.length === 0) {
+      return [new MessageItem('No traces in this environment', 'info')];
+    }
+
+    const sortedTraces = [...traces].sort(
+      (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    );
+
+    return sortedTraces.map(trace => new TraceItem(trace, connectionId, baseUrl, true));
   }
 
   private buildTraceTreeItems(connectionId: string, window: TracesWindow, baseUrl: string): vscode.TreeItem[] {

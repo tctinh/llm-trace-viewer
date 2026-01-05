@@ -38,6 +38,7 @@ export interface Trace {
   sessionId: string | null;
   release: string | null;
   version: string | null;
+  environment: string | null;
   public: boolean;
   projectId?: string;
 }
